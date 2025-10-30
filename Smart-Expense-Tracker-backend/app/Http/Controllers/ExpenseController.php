@@ -19,26 +19,29 @@ class ExpenseController extends Controller
     }
 
     
-    public function store(Request $request)
-    {
-        // validates the input
-      $validated=$request->validate([
-        'amount' =>'required|numeric',
-        'category' =>'required|string|max:255',
-        'date' =>'required|date',
-        'note' =>'nullable|string',
-      ]);
-      
-        // this create a new expense
-       $expense= Expense::create($validated);
+public function store(Request $request)
+{
+    //Validate the input
+    $validated = $request->validate([
+        'amount' => 'required|numeric',
+        'category' => 'required|string|max:255',
+        'date' => 'nullable|date', // optional; must be a valid date if provided
+        'note' => 'nullable|string',
+    ]);
 
-    //    reutrn respone
-       return response()->json([
-        'message'=> 'Expense Created Successfully!',
-        'data'=> $expense,
-       ],201);
-    
-    }
+    //Set default date if not provided
+    $validated['date'] = $validated['date'] ?? now()->toDateString();
+
+    // Create a new expense
+    $expense = Expense::create($validated);
+
+    //Return response
+    return response()->json([
+        'message' => 'Expense Created Successfully!',
+        'data' => $expense,
+    ], 201);
+}
+
    
     public function show(string $id)
     {
