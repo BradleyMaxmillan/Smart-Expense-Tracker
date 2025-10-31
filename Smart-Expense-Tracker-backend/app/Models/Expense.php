@@ -10,9 +10,18 @@ class Expense extends Model
     use HasFactory;
 
     protected $fillable = [
-        'amount',    // 👈 fixed (no space)
-        'category',
-        'date',      // 👈 fixed (correct spelling)
+        'amount',
+        'category_id',
+        'date',
         'note',
     ];
+
+    protected $casts = [
+        'date' => 'date',
+    ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

@@ -8,12 +8,11 @@ return new class extends Migration
 {
 public function up(): void
 {
-    Schema::create('expenses', function (Blueprint $table) {
+    Schema::create('budgets', function (Blueprint $table) {
         $table->id();
         $table->foreignId('category_id')->constrained()->onDelete('cascade');
-        $table->string('description')->nullable();
         $table->decimal('amount', 10, 2);
-        $table->date('date');
+        $table->date('month');
         $table->timestamps();
     });
 }
@@ -23,6 +22,6 @@ public function up(): void
      */
     public function down(): void
     {
-        Schema::dropIfExists('expenses');
+        Schema::dropIfExists('budgets');
     }
 };
