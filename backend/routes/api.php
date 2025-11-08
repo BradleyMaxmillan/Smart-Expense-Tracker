@@ -37,7 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
       // Analytics Routes
     Route::get('/analytics/monthly-expenses', [AnalyticsController::class, 'monthlyExpenses']);
-    Route::get('/analytics/category-expenses', [AnalyticsController::class, 'categoryExpenses']);
+    Route::get('/analytics/category-expenses', [AnalyticsController::class, 'expensesByCategory']);
     Route::get('/analytics/recent-expenses', [AnalyticsController::class, 'recentExpenses']);
     Route::get('/analytics/budget-vs-actual', [AnalyticsController::class, 'budgetVsActual']);
 });

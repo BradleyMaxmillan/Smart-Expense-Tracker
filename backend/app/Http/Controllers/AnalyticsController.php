@@ -37,6 +37,23 @@ class AnalyticsController extends Controller
 
         return response()->json($categoryExpenses);
     }
+    public function recentExpenses(Request $request)
+{
+    $userId = $request->user()->id;
+
+    // Get the 5 most recent expenses with category info
+    $recentExpenses = Expense::with('category')
+        ->where('user_id', $userId)
+        ->orderBy('date', 'desc')
+        ->take(5)
+        ->get();
+
+    return response()->json([
+        'message' => 'Recent expenses retrieved successfully!',
+        'data' => $recentExpenses
+    ]);
+}
+
 
     // Compare budget vs actual spending for each category
     public function budgetVsActual(Request $request)
