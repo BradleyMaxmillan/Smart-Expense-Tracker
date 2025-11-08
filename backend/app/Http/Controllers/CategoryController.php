@@ -16,7 +16,6 @@ class CategoryController extends Controller
     {
         $validated = $request->validate([
             'category_name' => 'required|string|unique:categories',
-            'color_code' => 'nullable|string',
         ]);
 
         $category = Category::create($validated);

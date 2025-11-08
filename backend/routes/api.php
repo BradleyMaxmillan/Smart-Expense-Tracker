@@ -6,13 +6,12 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BudgetController;
 
 // Public routes - Authentication
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-    // Analytics
-    Route::get('/analytics', [AnalyticsController::class, 'index']);
 
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
@@ -32,4 +31,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Categories CRUD
     Route::apiResource('categories', CategoryController::class);
+
+    // Budgets CRUD
+   Route::apiResource('budgets', BudgetController::class);
+
+      // Analytics Routes
+    Route::get('/analytics/monthly-expenses', [AnalyticsController::class, 'monthlyExpenses']);
+    Route::get('/analytics/category-expenses', [AnalyticsController::class, 'categoryExpenses']);
+    Route::get('/analytics/recent-expenses', [AnalyticsController::class, 'recentExpenses']);
+    Route::get('/analytics/budget-vs-actual', [AnalyticsController::class, 'budgetVsActual']);
 });

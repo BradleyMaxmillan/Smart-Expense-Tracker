@@ -6,20 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-public function up(): void
-{
-    Schema::create('budgets', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('category_id')->constrained()->onDelete('cascade');
-        $table->decimal('amount', 10, 2);
-        $table->date('month');
-        $table->timestamps();
-    });
-}
+    public function up(): void
+    {
+        Schema::create('budgets', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->decimal('amount', 10, 2);
+            $table->date('month'); // you can store the first day of the month
+            $table->timestamps();
+        });
+    }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('budgets');

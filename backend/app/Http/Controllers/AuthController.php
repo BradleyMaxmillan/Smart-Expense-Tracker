@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -28,7 +29,7 @@ class AuthController extends Controller
         ]);
 
         // 3. Fire the Registered event (for email verification or other listeners)
-        event(new \Illuminate\Auth\Events\Registered($user));
+        event(new Registered($user));
 
         // 4) create sanctum token
         $token = $user->createToken('api-token')->plainTextToken;

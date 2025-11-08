@@ -6,17 +6,21 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-public function up(): void
-{
-    Schema::create('expenses', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('category_id')->constrained()->onDelete('cascade');
-        $table->string('description')->nullable();
-        $table->decimal('amount', 10, 2);
-        $table->date('date');
-        $table->timestamps();
-    });
-}
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('expenses', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->decimal('amount',10,2);
+            $table->date('date');
+            $table->string('note')->nullable();
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.
