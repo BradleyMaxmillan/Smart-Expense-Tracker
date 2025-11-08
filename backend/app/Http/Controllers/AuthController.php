@@ -11,7 +11,7 @@ use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
-    //register
+    //*******register
     public function register(Request $request)
     {
         // 1) validate input
@@ -74,5 +74,49 @@ public function login(Request $request)
         'user' => $user,
         'token' => $token,
     ]);
+} 
+    // ****User profile check
+
+    public function me(Request $request)
+{
+    return response()->json($request->user());
 }
+
+    // ****Update profile
+    public function updateProfile(Request $request)
+{
+    $user = $request->user(); // Get logged-in user
+
+    // Validate only the fields sent
+    $validated = $request->validate([
+        'name' => 'sometimes|string|max:255',
+        'email' => 'sometimes|email|unique:users,email,' . $user->id,
+        'password' => 'sometimes|string|min:6|confirmed',
+    ]);
+
+    // If password provided, hash it
+    if (isset($validated['password'])) {
+        $validated['password'] = Hash::make($validated['password']);
+    }
+
+    // Update only provided fields
+    $user->update($validated);
+
+    return response()->json([
+        'message' => 'Profile updated successfully.',
+        'user' => $user,
+    ]);
+}
+
+    // ****Logout 
+    public function logout(Request $request)
+{
+    // Delete the current access token
+    $request->user()->currentAccessToken()->delete();
+
+    return response()->json([
+        'message' => 'Logged out successfully.'
+    ]);
+}
+
 }

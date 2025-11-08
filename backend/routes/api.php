@@ -17,10 +17,9 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
 
     // Authenticated user info
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/user/me', [AuthController::class, 'me']);
+    Route::put('/user/updateProfile', [AuthController::class, 'updateProfile']);
 
     // Expenses CRUD
     Route::get('/expenses', [ExpenseController::class, 'index']);
