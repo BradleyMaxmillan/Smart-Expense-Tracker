@@ -1,24 +1,23 @@
-import React from 'react'
-import Card from '../ui/Card'
+import React from 'react';
+import { formatCurrency } from '../../utils/formatCurrency';
 
-export default function RecentTransactions({transactions, onDelete}){
-  return (
-    <Card>
-      <h3 className="font-semibold mb-2">Recent Transactions</h3>
-      <ul>
-        {transactions.slice().reverse().map(tx=>(
-          <li key={tx.id} className="flex items-center justify-between py-3 border-b">
-            <div>
-              <div className="font-medium">{tx.description}</div>
-              <div className="text-xs text-gray-500">{tx.category} • {tx.date}</div>
-            </div>
-            <div className="text-right">
-              <div className="font-semibold">Ksh {tx.amount}</div>
-              <button onClick={()=>onDelete(tx.id)} className="text-red-500 text-sm mt-1">Delete</button>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </Card>
-  )
-}
+const RecentTransactions = ({ transactions }) => (
+  <div className="bg-white rounded-lg shadow-md p-4 mt-4">
+    <h3 className="text-lg font-semibold mb-4">Recent Transactions</h3>
+    <ul>
+      {transactions.map(tx => (
+        <li key={tx.id} className="flex justify-between py-2 border-b">
+          <div>
+            <p className="font-medium">{tx.title}</p>
+            <p className="text-sm text-gray-500">{tx.category}</p>
+          </div>
+          <p className={tx.amount < 0 ? 'text-red-500' : 'text-green-500'}>
+            {tx.amount < 0 ? '-' : '+'}{formatCurrency(Math.abs(tx.amount))}
+          </p>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+export default RecentTransactions;

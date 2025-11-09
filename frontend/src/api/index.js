@@ -1,20 +1,15 @@
-import * as ls from './localStorageService'
-import { defaultTransactions, defaultCategories, defaultBudgets } from './dummyData'
+import * as storageService from './localStorageService';
+import { categories, transactions, budgets } from './dummyData';
 
-const KEYS = { TRANSACTIONS: 'transactions', CATEGORIES: 'categories', BUDGETS: 'budgets', USER: 'user' }
+const useBackend = false;
 
-export const bootstrapDefaults = () => {
-  if (!ls.getData(KEYS.TRANSACTIONS)) ls.saveData(KEYS.TRANSACTIONS, defaultTransactions)
-  if (!ls.getData(KEYS.CATEGORIES)) ls.saveData(KEYS.CATEGORIES, defaultCategories)
-  if (!ls.getData(KEYS.BUDGETS)) ls.saveData(KEYS.BUDGETS, defaultBudgets)
-}
+// Fetchers (dummy or local storage)
+export const fetchCategories = async () => useBackend ? [] : storageService.getCategories() || categories;
+export const fetchTransactions = async () => useBackend ? [] : storageService.getTransactions() || transactions;
+export const fetchBudgets = async () => useBackend ? [] : storageService.getBudgets() || budgets;
 
-export const storage = {
-  getTransactions: () => ls.getData(KEYS.TRANSACTIONS) || [],
-  saveTransactions: (list) => ls.saveData(KEYS.TRANSACTIONS, list),
-  getCategories: () => ls.getData(KEYS.CATEGORIES) || [],
-  getBudgets: () => ls.getData(KEYS.BUDGETS) || [],
-  getUser: () => ls.getData(KEYS.USER),
-  saveUser: (user) => ls.saveData(KEYS.USER, user),
-  removeUser: () => ls.removeData(KEYS.USER),
-}
+// Bootstrap defaults
+export const bootstrapDefaults = () => console.log('Bootstrap defaults initialized');
+
+// Export storage helpers
+export const storage = storageService;
