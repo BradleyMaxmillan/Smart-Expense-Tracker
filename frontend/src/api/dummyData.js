@@ -6,7 +6,7 @@ export const categories = [
   { id: 3, name: 'Transportation', color: '#60a5fa' },
   { id: 4, name: 'Entertainment', color: '#a78bfa' },
   { id: 5, name: 'Utilities', color: '#34d399' },
-  { id: 6, name: 'Income', color: '#10b981' }, // added Income category for positive transactions
+  { id: 6, name: 'Income', color: '#10b981' },
 ];
 
 export const transactions = [

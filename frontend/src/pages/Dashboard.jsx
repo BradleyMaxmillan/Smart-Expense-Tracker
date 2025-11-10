@@ -3,20 +3,16 @@ import SummaryCards from '../components/dashboard/SummaryCards';
 import SpendingChart from '../components/dashboard/SpendingChart';
 import RecentTransactions from '../components/dashboard/RecentTransactions';
 import SavingsTip from '../components/dashboard/SavingsTip';
-import { fetchCategories, fetchTransactions } from '../api';
+import { transactions as dummyTransactions, categories as dummyCategories } from '../api/dummyData';
 
 const Dashboard = () => {
   const [transactions, setTransactions] = useState([]);
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const loadData = async () => {
-      const tx = await fetchTransactions();
-      const cat = await fetchCategories();
-      setTransactions(tx);
-      setCategories(cat);
-    };
-    loadData();
+    // directly use dummy data
+    setTransactions(dummyTransactions);
+    setCategories(dummyCategories);
   }, []);
 
   return (
