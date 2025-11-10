@@ -1,16 +1,26 @@
+// src/context/DataContext.jsx
 import React, { createContext, useContext } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { storage } from '../api';
+import { categories as dummyCategories, transactions as dummyTransactions, budgets as dummyBudgets } from '../api/dummyData';
 
 const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
-  const [transactions, setTransactions] = useLocalStorage('transactions', storage.getTransactions());
-  const [categories, setCategories] = useLocalStorage('categories', storage.getCategories());
-  const [budgets, setBudgets] = useLocalStorage('budgets', storage.getBudgets());
+  const [transactions, setTransactions] = useLocalStorage('transactions', dummyTransactions);
+  const [categories, setCategories] = useLocalStorage('categories', dummyCategories);
+  const [budgets, setBudgets] = useLocalStorage('budgets', dummyBudgets);
 
-  const addTransaction = (tx) => setTransactions([...transactions, tx]);
-  const deleteTransaction = (id) => setTransactions(transactions.filter(t => t.id !== id));
+  // Add a transaction
+  const addTransaction = (tx) => {
+    const updated = [...transactions, tx];
+    setTransactions(updated);
+  };
+
+  // Delete a transaction by id
+  const deleteTransaction = (id) => {
+    const updated = transactions.filter(t => t.id !== id);
+    setTransactions(updated);
+  };
 
   return (
     <DataContext.Provider value={{ transactions, categories, budgets, addTransaction, deleteTransaction }}>

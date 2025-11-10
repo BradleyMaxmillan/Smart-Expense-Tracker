@@ -1,5 +1,6 @@
 import React from 'react';
 import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from 'recharts';
+
 import { getSpendingByCategory } from '../../utils/chartHelpers';
 
 const SpendingChart = ({ transactions = [], categories = [] }) => {
